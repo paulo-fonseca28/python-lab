@@ -2,11 +2,11 @@
 
 ## Project Overview
 
-This project implements a modular information retrieval (IR) engine in Python built on top of TF-IDF weighting, boolean retrieval, cosine similarity, and phrase queries. It loads a text collection from a JSON file, builds an inverted index with positional information, and offers a simple CLI for experimentation with IR concepts on a small document set.[attached_file:59][attached_file:60]
+This project implements a modular information retrieval (IR) engine in Python built on top of TF-IDF weighting, boolean retrieval, cosine similarity, and phrase queries. It loads a text collection from a JSON file, builds an inverted index with positional information, and offers a simple CLI for experimentation with IR concepts on a small document set.
 
 ## Features
 
-- Load a document collection from JSON (`collection_tfidf_ir_engine.json`) with `name` (ID) and `content` (text) fields.[attached_file:59][attached_file:60]  
+- Load a document collection from JSON (`collection_tfidf_ir_engine.json`) with `name` (ID) and `content` (text) fields. 
 - Incremental or bulk insertion and removal of documents from the active collection.  
 - Text normalization with lowercasing, accent removal, and regex-based tokenization.  
 - Vocabulary construction and positional inverted index: term → {doc_id → [positions]}.  
@@ -18,11 +18,11 @@ This project implements a modular information retrieval (IR) engine in Python bu
 ## Project Structure
 
 - `tfidf_ir_engine.py` – Core implementation of the IR system (class, indexing, TF-IDF, queries, CLI menu).  
-- `collection_tfidf_ir_engine.json` – Example document collection with `name` and `content` fields used as the corpus.[attached_file:59][attached_file:60]
+- `collection_tfidf_ir_engine.json` – Example document collection with `name` and `content` fields used as the corpus.
 
 ## Collection and Text Processing
 
-The system expects the collection file `collection_tfidf_ir_engine.json` to be a JSON list where each element contains at least:[attached_file:59][attached_file:60]
+The system expects the collection file `collection_tfidf_ir_engine.json` to be a JSON list where each element contains at least:
 
 ```json
 {
@@ -48,13 +48,14 @@ These tokens are used to build both the vocabulary and the inverted index.
 
 ### Vocabulary and inverted index
 
-- The vocabulary is the sorted set of all distinct tokens that appear in the active collection.[attached_file:59]  
+- The vocabulary is the sorted set of all distinct tokens that appear in the active collection.
+
 - The positional inverted index has the form:
 
     term -> { doc_id: [pos1, pos2, ...] }
 
 
-- Positions are zero-based indices in the token sequence of each document, enabling phrase queries later.[attached_file:59]
+- Positions are zero-based indices in the token sequence of each document, enabling phrase queries later.
 
 ### TF, IDF, and TF-IDF
 
@@ -63,7 +64,7 @@ For each document:
 - Term frequency (TF) uses log weighting:
   - If `freq > 0`: `tf = 1 + log2(freq)`
   - If `freq = 0`: `tf = 0.0`  
-- Document frequency `df(term)` is the number of documents where the term has `tf > 0`.[attached_file:59]  
+- Document frequency `df(term)` is the number of documents where the term has `tf > 0`.
 - Inverse document frequency (IDF) is:
 
 ```python
@@ -78,7 +79,7 @@ tfidf_doc[term] = tf_doc[term] * idf[term]
 ```
 
 
-The engine can display the non-zero TF-IDF weights per document, summarizing which terms are most relevant in each text.[attached_file:59]
+The engine can display the non-zero TF-IDF weights per document, summarizing which terms are most relevant in each text.
 
 ## Query Capabilities
 
@@ -89,7 +90,7 @@ The engine supports simple boolean queries over normalized terms with the operat
 - Evaluation is left-to-right (no precedence or parentheses).
 - Terms are normalized with the same pipeline used for documents.
 - For each term, the engine retrieves the set of document IDs from the inverted index.
-- `NOT` uses the set of all document IDs to compute complements.[attached_file:59]
+- `NOT` uses the set of all document IDs to compute complements.
 
 Examples (as strings):
 
@@ -112,7 +113,7 @@ cosine(q, d) = dot(q, d) / (||q|| * ||d||)
 ```
 
 
-- Documents are ranked by similarity (descending), and the top-k results are displayed.[attached_file:59]
+- Documents are ranked by similarity (descending), and the top-k results are displayed.
 
 ### Phrase queries (positional)
 
@@ -123,7 +124,7 @@ For an exact phrase query:
 - For each candidate document, the engine checks positional sequences:
   - It looks for positions `p` where the first term appears and tests whether
     `p + 1`, `p + 2`, ..., `p + (n - 1)` also appear for the subsequent terms.  
-- Documents and the number of exact occurrences of the phrase are reported, sorted by frequency.[attached_file:59]
+- Documents and the number of exact occurrences of the phrase are reported, sorted by frequency.
 
 ## Example Usage
 
@@ -145,11 +146,11 @@ python tfidf_ir_engine.py
 - Display the full positional inverted index.
 - Run boolean queries with `AND`, `OR`, `NOT`.
 - Run similarity (cosine) ranking for a text query.
-- Run phrase queries over the indexed collection.[attached_file:59]
+- Run phrase queries over the indexed collection.
 
 ## Learning Outcomes
 
 - Practical understanding of building an inverted index with positions in Python.  
 - Hands-on experience with TF-IDF weighting (TF log scaling, IDF, and full document vectors).  
-- Implementation of boolean, cosine similarity, and phrase retrieval on the same indexed collection.[attached_file:59]  
+- Implementation of boolean, cosine similarity, and phrase retrieval on the same indexed collection.
 - Exposure to IR engine design, normalization pipelines, and simple CLI interaction for experimentation.
